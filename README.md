@@ -4,6 +4,27 @@
 
 Project for 42Nice
 
+## Registers
+
+It's obvious and written everywhere, but these are the input registers for function arguments, dont get this wrong!
+
+> rdi, rsi, rdx, rcx, r8, and r9
+
+And the return register is also important
+
+> rax
+
+## Development
+
+Usefull watch while writing assmebly
+```
+watch "make tst && ./tst"
+```
+
+Local gotbolt version
+```
+gcc test.c -c -S -o - -masm=intel | grep -vE '\s+\.'
+```
 
 ## Links n stuff
 

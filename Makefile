@@ -1,7 +1,10 @@
 NAME = libasm.a
 
-SRC_FILES = src/add.s
-OBJ_FILES = obj/add.o
+SRC_FILES = src/add.s       \
+			src/ft_strlen.c \
+
+OBJ_FILES = obj/add.o       \
+			obj/ft_strlen.o \
 
 C_FLAGS = -Wall -Werror -Wextra
 

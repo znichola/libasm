@@ -11,5 +11,6 @@ Project for 42Nice
 - [calling convetion](https://en.wikipedia.org/wiki/X86_calling_conventions)
 - [compiler explorer](https://godbolt.org/)
 - [linking asm to C](https://stackoverflow.com/questions/24991944/linking-c-with-nasm#answer-24992571)
-
+- [linking with asm](https://wjwrobot.github.io/2020/01/28/Link-Static-Dynamic-Library-in-C-C-on-Linux/)
+- [calling convetion x86_64](https://www.nasm.us/doc/nasmdo12.html)
 

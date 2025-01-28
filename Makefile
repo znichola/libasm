@@ -3,20 +3,24 @@ NAME = libasm.a
 SRC_FILES = src/add.s
 OBJ_FILES = obj/add.o
 
+C_FLAGS = -Wall -Werror -Wextra
 
-all: obj $(NAME)
+all: $(NAME)
 	
-obj/%.o : src/%.s
+obj/%.o : src/%.s obj
 	nasm -f elf64 -o $@ $<
 
 $(NAME): $(OBJ_FILES)
 	ar rc $(NAME) $(OBJ_FILES)
 
 clean:
-	rm $(NAME) $(OBJ_FILES)
+	-rm -r $(NAME) obj tst 
 
-tst: $(NAME)
-	gcc test/main.c $(NAME) -o tst
+re : clean $(NAME)
+
+tst: $(NAME) test/main.c
+	gcc $(C_FLAGS) test/main.c -L. -lasm -o tst
 
 obj:
 	mkdir obj
+

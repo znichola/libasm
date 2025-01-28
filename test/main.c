@@ -1,9 +1,13 @@
 #include <stdio.h>
 
-extern int addOne(int a);
+int addOne(int a);
+void doNothing();
+int retZero();
 
 int main() {
-    int this = addOne(2);
-    printf("the value: %d\n", this);
+    int this = 0;
+     this = addOne(2);
+    doNothing();
+    printf("the value: %d\nand zero: %d\n", this, retZero());
     return 0;
 }

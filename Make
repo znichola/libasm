@@ -1,6 +1,0 @@
-ASM = nasm
-ASM_FLAGS = -f elf64
-
-FILES = ft_strlen.s
-
-

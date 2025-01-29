@@ -1,10 +1,20 @@
 NAME = libasm.a
 
-SRC_FILES = src/add.s       \
-			src/ft_strlen.c \
+SRC_FILES =                 \
+			src/ft_read.s   \
+			src/ft_strcmp.s \
+			src/ft_strcpy.s \
+			src/ft_strdup.s \
+			src/ft_strlen.s \
+			src/ft_write.s
 
-OBJ_FILES = obj/add.o       \
+OBJ_FILES =                 \
+			obj/ft_read.o   \
+			obj/ft_strcmp.o \
+			obj/ft_strcpy.o \
+			obj/ft_strdup.o \
 			obj/ft_strlen.o \
+			obj/ft_write.o
 
 C_FLAGS = -Wall -Werror -Wextra
 
@@ -22,7 +32,7 @@ clean:
 re : clean $(NAME)
 
 tst: $(NAME) test/main.c
-	gcc $(C_FLAGS) test/main.c -L. -lasm -o tst
+	gcc $(C_FLAGS) -I. test/main.c -L. -lasm -o tst
 
 obj:
 	mkdir obj

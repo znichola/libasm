@@ -48,33 +48,43 @@ int gelt(int i) {
 
 void test_strcmp() {
     char *s[] = {
-         "hello world"
-        ,"these are not the droids you are looking for"
+         "z"
         ,""
+        ,"longer"
+        ,"this is longe"
+        ,"a"
+        ,"B"
         ,""
+        ,"o"
+        ,"123"
     };
 
     char *z[] = {
-         "hello world!"
-        ,"these are not the droids you are looking for"
-        ,""
+         ""
+        ,"y"
+        ,"longe"
+        ,"this is longer"
+        ,"A"
+        ,"b"
+        ,"" 
         ,"o" 
+        ,"1"
     };
 
     printf("Testing strcmp\n");
 
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 9; i++) {
         int res = strcmp(s[i], z[i]);
         int ftr = ft_strcmp(s[i], z[i]);
         bool cmp = gelt(res) == gelt(ftr);
         expect(cmp);
         if (!cmp)
             printf("\
-      expected len: %d\n\
-      received len: %d\n\
-      for string s: \"%s\"\n\
-      for string z: \"%s\"\n\
-", res, ftr, s[i], z[i]);
+      expected : %d hex: %#x\n\
+      received : %d hex: %#x\n\
+      string s : \"%s\"\n\
+      string z : \"%s\"\n\
+", res, res, ftr, ftr, s[i], z[i]);
     }
 
     return;

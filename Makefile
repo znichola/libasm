@@ -16,7 +16,7 @@ OBJ_FILES =                 \
 			obj/ft_strlen.o \
 			obj/ft_write.o
 
-C_FLAGS = -Wall -Werror -Wextra
+C_FLAGS = -Wall -Werror -Wextra #-fsanitize=address
 
 all: $(NAME)
 	

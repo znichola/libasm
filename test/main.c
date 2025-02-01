@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include "libasm.h"
 
@@ -8,10 +9,12 @@ void expect(bool res);
 
 void test_strlen();
 void test_strcmp();
+void test_strcpy();
 
 int main() {
     test_strlen();
     test_strcmp();
+    test_strcpy();
     
     return 0;
 }
@@ -87,6 +90,45 @@ void test_strcmp() {
 ", res, res, ftr, ftr, s[i], z[i]);
     }
 
+    return;
+}
+
+void test_strcpy() {
+    char *s[] = {
+         ""
+        ,"a"
+        ,"B"
+        ,"123123o"
+        ,"\n\t\r\n"
+        ,"longer than this thing"
+        ,"zero byte in \0\0 the middle"
+    };
+
+    char *d1 = malloc(200 * sizeof(char));
+    char *d2 = malloc(200 * sizeof(char));
+
+    printf("Testing strcpy\n");
+
+    for (int i = 0; i < 7; i++) {
+        bzero(d1, 200 * sizeof(char));
+        bzero(d2, 200 * sizeof(char));
+        if (i == 0) // to check it writes the \0 for empty string
+            d2[0] = '#'; 
+        char *exp =    strcpy(d1, s[i]);
+        char *res = ft_strcpy(d2, s[i]);
+        int   cmp = memcmp(exp, res, 200 * sizeof(char));
+
+        expect(cmp == 0);
+        if (!(cmp == 0))
+            printf("\
+      expected : \"%s\"\n\
+      received : \"%s\"\n\
+      hex      : res %p d2 %p\n\
+", exp, res, res, d2);
+    }
+
+    free(d1);
+    free(d2);
     return;
 }
 

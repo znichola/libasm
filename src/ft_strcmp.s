@@ -23,11 +23,11 @@ ft_strcmp:
     test al, al ; s1[i] != \0
     je .sub_ret ; return if s1 is zero
 
-    add rcx, 1
+    add rcx, 1 ; i++
     sub eax, edx ; subtract the two characters
-    cmp eax, 0
-    je .loop
-    jne .ret
+    cmp eax, 0 ; check res == 0
+    je .loop ; if equal loop
+    jne .ret ; else skip to return
 
 .mov_sub_ret:
     movsx edx, BYTE [rsi]

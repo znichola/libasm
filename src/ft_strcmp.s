@@ -12,6 +12,9 @@ ft_strcmp:
     ; rcx is the counter
     ; rdx is the scratch data
 
+    ; bits 64  32  16 8  8
+    ;      rax eax ax ah al
+
     movsx eax, BYTE [rdi]
     test al, al ; != \0  test is a logical and
     je .mov_sub_ret

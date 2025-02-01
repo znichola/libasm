@@ -12,7 +12,7 @@ ft_strcpy:
     ; rcx is the counter
     ; rdx is the scratch data
 
-    ; bits 64  32  16 8  8 
+    ; bits 64  32  16 8  8
     ;      rax eax ax ah al
 
     mov rax, rdi ; move pointer for dest to return rax

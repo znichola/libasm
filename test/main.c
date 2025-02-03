@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 #include "libasm.h"
 
@@ -10,11 +11,13 @@ void expect(bool res);
 void test_strlen();
 void test_strcmp();
 void test_strcpy();
+void test_strdup();
 
 int main() {
     test_strlen();
     test_strcmp();
     test_strcpy();
+    test_strdup();
     
     return 0;
 }
@@ -132,6 +135,42 @@ void test_strcpy() {
     return;
 }
 
+void test_strdup() {
+    char *s[] = {
+         ""
+        ,"a"
+        ,"#"
+        ,"p"
+        ,"ab"
+        ,"\n\t\r\n"
+        ,"some long string for testing"
+        ,"🤖👋©←°(❁´◡`❁)"
+    };
+
+    printf("Testing strdup\n");
+
+    printf("TEST %lu\n", strlen("123")); 
+
+    for (int i = 0; i < 8; i++) {
+        char *exp =    strdup(s[i]);
+        char *res = ft_strdup(s[i]);
+
+        int  cmp  = memcmp(exp, res, strlen(s[i]) * sizeof(char));
+        int  cmp2 = strlen(exp) - strlen(res); // test ending \0
+        cmp = cmp + cmp2;
+        expect(cmp == 0);
+        if (true || !(cmp == 0)) {
+            printf("\
+      expected : \"%s\"\n\
+      received : \"", exp);
+        fflush(stdout);
+        write(1, res, strlen(s[i]));
+        write(1, &"\"\n", 1);
+        }
+        free(exp);
+        free(res);
+    }
+}
 
 void expect(bool res) {
     static int c = 0;

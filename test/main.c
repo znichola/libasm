@@ -180,19 +180,45 @@ void test_write() {
          ""
         ,"1"
         ,"123"
-        ,"\n\t\r\n"
+        ,"\ttab"
         ,"long line to test"
+        ,"🤖👋©←°(❁´◡`❁)"
     };
     printf("Testing write\n");
     fflush(stdout);
 
-    for (int i = 0; i < 2; i++) {
+    for (int i = 0; i < 6; i++) {
         char l = strlen(s[i]);
         write(1, "expected: \"", 11);
-        write(1, s[i], l);
+        char exp = write(1, s[i], l);
         write(1, "\"\n written: \"", 13);
-        ft_write(1, s[i], l);
+        char res = ft_write(1, s[i], l);
         write(1, "\"\n\n", 3);
+        char cmp = exp - res;
+        expect(cmp == 0);
+        fflush(stdout);
+        if (!(cmp == 0))
+            printf("\
+      expected : %d\n\
+      received : %d\n", exp, res);
+    }
+    printf("Testing write, errors\n");
+    char exp =    write(4, &"test", 4);
+    char res = ft_write(4, &"test", 4);
+    int cmp = exp - res;
+    expect(cmp == 0);
+    if (cmp)
+        printf("\
+      expected : %d\n\
+      received : %d\n", exp, res);
+}
+
+void test_read() {
+    printf("Testing read\n");
+    char b[1000] = {0};
+    (void)b;
+    for (int i = 0; i < 2; i++) {
+
     }
 }
 

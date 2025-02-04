@@ -190,27 +190,27 @@ void test_write() {
     for (int i = 0; i < 6; i++) {
         char l = strlen(s[i]);
         write(1, "expected: \"", 11);
-        char exp = write(1, s[i], l);
+        ssize_t exp = write(1, s[i], l);
         write(1, "\"\n written: \"", 13);
-        char res = ft_write(1, s[i], l);
+        ssize_t res = ft_write(1, s[i], l);
         write(1, "\"\n\n", 3);
-        char cmp = exp - res;
+        ssize_t cmp = exp - res;
         expect(cmp == 0);
         fflush(stdout);
         if (!(cmp == 0))
             printf("\
-      expected : %d\n\
-      received : %d\n", exp, res);
+      expected : %zd\n\
+      received : %zd\n", exp, res);
     }
     printf("Testing write, errors\n");
-    char exp =    write(4, &"test", 4);
-    char res = ft_write(4, &"test", 4);
-    int cmp = exp - res;
-    expect(cmp == 0);
-    if (cmp)
+    ssize_t exp =    write(4, &"test", 4);
+    ssize_t res = ft_write(4, &"test", 4);
+
+    expect((exp == res));
+    if (!(exp == res))
         printf("\
-      expected : %d\n\
-      received : %d\n", exp, res);
+      expected : %zd\n\
+      received : %zd\n", exp, res);
 }
 
 void test_read() {

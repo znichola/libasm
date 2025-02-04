@@ -15,5 +15,9 @@ ft_write:
     ; bits 64  32  16 8  8
     ;      rax eax ax ah al
 
+    mov rax, 1 ; 1 is syscall for write
+    ; arguments are the same as write()
+    syscall
+
     pop rbp
     ret

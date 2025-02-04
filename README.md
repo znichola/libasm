@@ -35,4 +35,5 @@ gcc test.c -c -S -o - -masm=intel | grep -vE '\s+\.'
 - [linking with asm](https://wjwrobot.github.io/2020/01/28/Link-Static-Dynamic-Library-in-C-C-on-Linux/)
 - [calling convention x86_64](https://www.nasm.us/doc/nasmdo12.html)
 - [x86 jumps](http://www.unixwiz.net/techtips/x86-jumps.html)
+- [linux syscall table](https://filippo.io/linux-syscall-table/)
 

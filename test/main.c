@@ -12,13 +12,15 @@ void test_strlen();
 void test_strcmp();
 void test_strcpy();
 void test_strdup();
+void test_write();
 
 int main() {
     test_strlen();
     test_strcmp();
     test_strcpy();
     test_strdup();
-    
+    test_write();
+
     return 0;
 }
 
@@ -149,8 +151,6 @@ void test_strdup() {
 
     printf("Testing strdup\n");
 
-    printf("TEST %lu\n", strlen("123")); 
-
     for (int i = 0; i < 8; i++) {
         char *exp =    strdup(s[i]);
         char *res = ft_strdup(s[i]);
@@ -159,16 +159,40 @@ void test_strdup() {
         int  cmp2 = strlen(exp) - strlen(res); // test ending \0
         cmp = cmp + cmp2;
         expect(cmp == 0);
-        if (true || !(cmp == 0)) {
+        if (!(cmp == 0)) {
             printf("\
       expected : \"%s\"\n\
       received : \"", exp);
         fflush(stdout);
         write(1, res, strlen(s[i]));
-        write(1, &"\"\n", 1);
+        write(1, &"\"\n", 2);
+        }
+        if (cmp == 0 && exp == 0) {
+            write(1, &"malloc OK\n", 10);
         }
         free(exp);
         free(res);
+    }
+}
+
+void test_write() {
+    char *s[] = {
+         ""
+        ,"1"
+        ,"123"
+        ,"\n\t\r\n"
+        ,"long line to test"
+    };
+    printf("Testing write\n");
+    fflush(stdout);
+
+    for (int i = 0; i < 2; i++) {
+        char l = strlen(s[i]);
+        write(1, "expected: \"", 11);
+        write(1, s[i], l);
+        write(1, "\"\n written: \"", 13);
+        ft_write(1, s[i], l);
+        write(1, "\"\n\n", 3);
     }
 }
 

@@ -1,5 +1,7 @@
 BITS 64
 
+    extern errno_location
+
     global ft_write
 
 section .text
@@ -19,5 +21,13 @@ ft_write:
     ; arguments are the same as write()
     syscall
 
+    cmp rax, 0
+    jns .ret
+    neg rax
+    mov rdi, rax
+    call errno_location
+    mov [rax], rdi
+    mov rax, -1
+.ret:
     pop rbp
     ret

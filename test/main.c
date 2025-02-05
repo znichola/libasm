@@ -285,29 +285,45 @@ void test_read() {
     bzero(res, 1000);
 
     printf("Testing read, errors\n");
+    errno = 0;
     ssize_t e =    read(69, res, 1000);
+    int ee = errno;
+    errno = 0;
     lseek(4, 0, 0);
     ssize_t r = ft_read(69, res, 1000);
-
-    expect((exp == res));
-    if (!(exp == res))
+    int er = errno;
+    expect((ee == er) && (e == r));
+    if ((ee != er) || (e != r) || true)
         printf("\
-      expected : %zd\n\
-      received : %zd\n", e, r);
+      expected : %zd \"%s\"\n\
+      received : %zd \"%s\"\n\
+      ex errno : %d \"%s\"\n\
+      rc errno : %d \"%s\"\n\
+",e, exp, r, res, ee, strerror(ee), er, strerror(er));
 
     int tf = open("foobar", O_CREAT, S_IWUSR);
-
+    write(tf, &"YES NO", 6);
+    write(1, &"YES NO", 6);
+    lseek(tf, 0, 0);
+    remove("foobar"); // delete file to cause error
     bzero(exp, 1000);
     bzero(res, 1000);
-    e =    read(tf, exp, 1000);
+    errno = 0;
+    e  = read(tf, exp, 1000);
+    ee = errno;
     lseek(tf, 0, 0);
-    r = ft_read(tf, res, 1000);
-
-    expect((exp == res));
-    if (!(exp == res))
+    errno = 0;
+    r  = ft_read(tf, res, 1000);
+    er = errno;
+    expect((ee == er) && (e == r));
+    if ((ee != er) || (e != r) || true)
         printf("\
-      expected : %zd\n\
-      received : %zd\n", e, r);
+      expected : %zd \"%s\"\n\
+      received : %zd \"%s\"\n\
+      ex errno : %d \"%s\"\n\
+      rc errno : %d \"%s\"\n\
+", e, exp, r, res, ee, strerror(ee), er, strerror(er));
+    close(tf);
 }
 
 void expect(bool res) {

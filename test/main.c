@@ -8,6 +8,7 @@
 
 #include "libasm.h"
 
+int error_count = 0;
 void expect(bool res);
 
 void test_strlen();
@@ -25,6 +26,7 @@ int main() {
     test_write();
     test_read();
 
+    printf("TOTAL ERRORS: %d\n", error_count);
     return 0;
 }
 
@@ -177,6 +179,10 @@ void test_strdup() {
         free(exp);
         free(res);
     }
+
+    printf("Testing strdup, error\n");
+    expect(false);
+    printf("TODO: implement malloc test\n");
 }
 
 void test_write() {
@@ -281,6 +287,7 @@ void expect(bool res) {
         printf("%.2d - OK\n", c);
     } else {
         printf("%.2d - KO\n", c);
+        error_count += 1;
     }
     c = c + 1;
 }

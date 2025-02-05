@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <errno.h>
 
 #include "libasm.h"
 
@@ -212,15 +213,24 @@ void test_write() {
       expected : %zd\n\
       received : %zd\n", exp, res);
     }
-    printf("Testing write, errors\n");
-    ssize_t exp =    write(4, &"test", 4);
-    ssize_t res = ft_write(4, &"test", 4);
 
-    expect((exp == res));
-    if (!(exp == res))
+    printf("Testing write, errors\n");
+
+    errno = 0;
+    ssize_t exp =    write(4, &"test", 4);
+    int ee = errno;
+    errno = 0;
+    ssize_t res = ft_write(4, &"test", 4);
+    int er = errno;
+
+    expect((exp == res) && (ee == er));
+    if ((exp != res) || (ee != er))
         printf("\
       expected : %zd\n\
-      received : %zd\n", exp, res);
+      received : %zd\n\
+      ex errno : %d \"%s\"\n\
+      rc errno : %d \"%s\"\n\
+", exp, res, ee, strerror(ee), er, strerror(er));
 }
 
 void test_read() {
@@ -259,6 +269,8 @@ void test_read() {
       expected : %.2zd \"%s\"\n\
       received : %.2zd \"%s\"\n\
 ", e, exp, r, res);
+        bzero(exp, 1000);
+        bzero(res, 1000);
     }
 
     for (int i = 0; i < 3; i++) {
@@ -268,10 +280,28 @@ void test_read() {
         b[1] = (char)i + '0';
         remove(b);
     }
+
+    bzero(exp, 1000);
+    bzero(res, 1000);
+
     printf("Testing read, errors\n");
-    ssize_t e =    read(4, &"test", 4);
+    ssize_t e =    read(69, res, 1000);
     lseek(4, 0, 0);
-    ssize_t r = ft_read(4, &"test", 4);
+    ssize_t r = ft_read(69, res, 1000);
+
+    expect((exp == res));
+    if (!(exp == res))
+        printf("\
+      expected : %zd\n\
+      received : %zd\n", e, r);
+
+    int tf = open("foobar", O_CREAT, S_IWUSR);
+
+    bzero(exp, 1000);
+    bzero(res, 1000);
+    e =    read(tf, exp, 1000);
+    lseek(tf, 0, 0);
+    r = ft_read(tf, res, 1000);
 
     expect((exp == res));
     if (!(exp == res))

@@ -3,6 +3,8 @@
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
 #include "libasm.h"
 
@@ -13,6 +15,7 @@ void test_strcmp();
 void test_strcpy();
 void test_strdup();
 void test_write();
+void test_read();
 
 int main() {
     test_strlen();
@@ -20,6 +23,7 @@ int main() {
     test_strcpy();
     test_strdup();
     test_write();
+    test_read();
 
     return 0;
 }
@@ -214,12 +218,60 @@ void test_write() {
 }
 
 void test_read() {
-    printf("Testing read\n");
-    char b[1000] = {0};
-    (void)b;
-    for (int i = 0; i < 2; i++) {
-
+    char *s[] = {
+         "test string on one line"
+        ,"two\nlines of text\nor\tthree?\n"
+        ,"🤖👋©←°(❁´◡`❁)\n"
+    };
+    int f[3] = {0};
+    for (int i = 0; i < 3; i++) {
+        char b[3] = {0};
+        b[0] = 'f';
+        b[1] = (char)i + '0';
+        f[i] = open(b, O_CREAT | O_RDWR, S_IRUSR | S_IWUSR);
+        if (f[i] < 0) {
+            write(2, &"error create test files\n", 24);
+            return ;
+        }
+        write(f[i], s[i], strlen(s[i]));
+        lseek(f[i], 0, 0); // reset to start of file
     }
+
+    printf("Testing read\n");
+
+    char exp[1000] = {0};
+    char res[1000] = {0};
+    for (int i = 0; i < 3; i++) {
+        ssize_t e =    read(f[i], exp, 1000);
+        lseek(f[i], 0, 0);
+        ssize_t r = ft_read(f[i], res, 1000);
+
+        int cmp = memcmp(exp, res, 1000 * sizeof(char));
+        expect(e == r || cmp == 0);
+        if (e != r || cmp != 0)
+            printf("\
+      expected : %.2zd \"%s\"\n\
+      received : %.2zd \"%s\"\n\
+", e, exp, r, res);
+    }
+
+    for (int i = 0; i < 3; i++) {
+        close(f[i]);
+        char b[3] = {0};
+        b[0] = 'f';
+        b[1] = (char)i + '0';
+        remove(b);
+    }
+    printf("Testing read, errors\n");
+    ssize_t e =    read(4, &"test", 4);
+    lseek(4, 0, 0);
+    ssize_t r = ft_read(4, &"test", 4);
+
+    expect((exp == res));
+    if (!(exp == res))
+        printf("\
+      expected : %zd\n\
+      received : %zd\n", e, r);
 }
 
 void expect(bool res) {

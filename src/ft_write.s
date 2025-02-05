@@ -1,6 +1,6 @@
 BITS 64
 
-    extern errno_location
+    extern __errno_location
 
     global ft_write
 
@@ -25,7 +25,7 @@ ft_write:
     jns .ret
     neg rax
     mov rdi, rax
-    call errno_location
+    call __errno_location wrt ..plt
     mov [rax], rdi
     mov rax, -1
 .ret:

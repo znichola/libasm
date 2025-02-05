@@ -2,6 +2,7 @@
 # define LIBASM_H
 
 #include <stdlib.h> // for malloc
+#include <errno.h>
 
 ssize_t ft_read(int fildes, void *buf, size_t nbytes);
 int     ft_strcmp(const char *s1, const char *s2);

@@ -16,7 +16,7 @@ OBJ_FILES =                 \
 			obj/ft_strlen.o \
 			obj/ft_write.o
 
-C_FLAGS = -Wall -Werror -Wextra -fsanitize=address
+C_FLAGS = -Wall -Werror -Wextra -g3 #-fsanitize=address
 
 all: $(NAME)
 	
@@ -34,6 +34,10 @@ re : clean $(NAME)
 tst: $(NAME) test/main.c
 	gcc $(C_FLAGS) -I. test/main.c -L. -lasm -o tst
 
+t: tst
+	./tst
+
 obj:
 	mkdir obj
 
+.PHONY: all clean re t 

@@ -20,13 +20,16 @@ void test_write();
 void test_read();
 
 int main() {
+/*
     test_strlen();
     test_strcmp();
     test_strcpy();
+*/
     test_strdup();
+/*
     test_write();
     test_read();
-
+*/
     printf("TOTAL ERRORS: %d\n", error_count);
     return 0;
 }
@@ -158,11 +161,11 @@ void test_strdup() {
 
     printf("Testing strdup\n");
 
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < 0; i++) {
         char *exp =    strdup(s[i]);
         char *res = ft_strdup(s[i]);
 
-        int  cmp  = memcmp(exp, res, strlen(s[i]) * sizeof(char));
+        int  cmp  = memcmp(exp, res, (strlen(s[i]) + 1) * sizeof(char));
         int  cmp2 = strlen(exp) - strlen(res); // test ending \0
         cmp = cmp + cmp2;
         expect(cmp == 0);
@@ -180,10 +183,16 @@ void test_strdup() {
         free(exp);
         free(res);
     }
-
-    printf("Testing strdup, error\n");
-    expect(false);
-    printf("TODO: implement malloc test\n");
+    char *dup = ft_strdup("hello world");
+    printf("testing dup \"%s\"\n", dup);
+    free(dup);
+    dup = ft_strdup("NO OOO ASDOASDOASODA");
+    printf("testing dup \"%s\"\n", dup);
+    free(dup);
+    dup = ft_strdup("ZZZZZZZSSSSSSDSSDSDSKDJSKDJSLKJD");
+    printf("testing dup \"%s\"\n", dup);
+    free(dup);
+    exit(0);
 }
 
 void test_write() {

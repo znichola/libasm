@@ -16,23 +16,30 @@ OBJ_FILES =                 \
 			obj/ft_strlen.o \
 			obj/ft_write.o
 
-C_FLAGS = -Wall -Werror -Wextra -g3 #-fsanitize=address
+C_FLAGS = -Wall -Werror -Wextra # -g3 #-fsanitize=address
 
-all: $(NAME)
+all: $(NAME) Makefile
 	
-obj/%.o : src/%.s obj
+obj/%.o : src/%.s
+	@mkdir -p obj
 	nasm -f elf64 -o $@ $<
 
 $(NAME): $(OBJ_FILES)
 	ar rc $(NAME) $(OBJ_FILES)
 
 clean:
-	-rm -r $(NAME) obj tst 
+	-rm -r obj test/main.o 
 
-re : clean $(NAME)
+fclean : clean
+	rm $(NAME) tst
 
-tst: $(NAME) test/main.c
-	gcc $(C_FLAGS) -I. test/main.c -L. -lasm -o tst
+re : fclean $(NAME)
+
+test/main.o : test/main.c
+	gcc $(C_FLAGS) -I. -c $< -o $@
+
+tst: $(NAME) test/main.o
+	gcc $(C_FLAGS) test/main.o -L. -lasm -o tst
 
 t: tst
 	./tst

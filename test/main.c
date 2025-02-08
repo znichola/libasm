@@ -20,16 +20,14 @@ void test_write();
 void test_read();
 
 int main() {
-/*
+
     test_strlen();
     test_strcmp();
     test_strcpy();
-*/
     test_strdup();
-/*
     test_write();
     test_read();
-*/
+
     printf("TOTAL ERRORS: %d\n", error_count);
     return 0;
 }
@@ -161,7 +159,7 @@ void test_strdup() {
 
     printf("Testing strdup\n");
 
-    for (int i = 0; i < 0; i++) {
+    for (int i = 0; i < 8; i++) {
         char *exp =    strdup(s[i]);
         char *res = ft_strdup(s[i]);
 
@@ -186,13 +184,18 @@ void test_strdup() {
     char *dup = ft_strdup("hello world");
     printf("testing dup \"%s\"\n", dup);
     free(dup);
-    dup = ft_strdup("NO OOO ASDOASDOASODA");
+    dup = ft_strdup("if these strings arent show it's error");
     printf("testing dup \"%s\"\n", dup);
     free(dup);
-    dup = ft_strdup("ZZZZZZZSSSSSSDSSDSDSKDJSKDJSLKJD");
+    dup = ft_strdup("there should always be strings here");
     printf("testing dup \"%s\"\n", dup);
     free(dup);
-    exit(0);
+    dup = ft_strdup("another string that should be visible");
+    printf("testing dup \"%s\"\n", dup);
+    free(dup);
+    dup = ft_strdup("must see this string! it's the last one");
+    printf("testing dup \"%s\"\n", dup);
+    free(dup);
 }
 
 void test_write() {
